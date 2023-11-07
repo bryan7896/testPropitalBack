@@ -1,8 +1,7 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository, HasManyRepositoryFactory} from '@loopback/repository';
 import {MyDatabaseDataSource} from '../datasources';
 import {Locations, LocationsRelations, RealEstateList} from '../models';
-import {RealEstateListRepository} from './real-estate-list.repository';
 
 export class LocationsRepository extends DefaultCrudRepository<
   Locations,
@@ -13,10 +12,8 @@ export class LocationsRepository extends DefaultCrudRepository<
   public readonly realEstateLists: HasManyRepositoryFactory<RealEstateList, typeof Locations.prototype.id>;
 
   constructor(
-    @inject('datasources.myDatabase') dataSource: MyDatabaseDataSource, @repository.getter('RealEstateListRepository') protected realEstateListRepositoryGetter: Getter<RealEstateListRepository>,
+    @inject('datasources.myDatabase') dataSource: MyDatabaseDataSource,
   ) {
     super(Locations, dataSource);
-    this.realEstateLists = this.createHasManyRepositoryFactoryFor('realEstateLists', realEstateListRepositoryGetter,);
-    this.registerInclusionResolver('realEstateLists', this.realEstateLists.inclusionResolver);
   }
 }
