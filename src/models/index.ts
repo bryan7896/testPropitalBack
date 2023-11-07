@@ -1,2 +1,3 @@
-export * from './real-estate-list.model';
 export * from './locations.model';
+export * from './real-estate-list.model';
+

@@ -13,7 +13,6 @@ import {
   param,
   patch,
   post,
-  put,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -127,17 +126,6 @@ export class RealEstateListsController {
     realEstateList: RealEstateList,
   ): Promise<void> {
     await this.realEstateListRepository.updateById(id, realEstateList);
-  }
-
-  @put('/real-estate-lists/{id}')
-  @response(204, {
-    description: 'RealEstateList PUT success',
-  })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() realEstateList: RealEstateList,
-  ): Promise<void> {
-    await this.realEstateListRepository.replaceById(id, realEstateList);
   }
 
   @del('/real-estate-lists/{id}')

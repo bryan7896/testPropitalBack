@@ -13,13 +13,26 @@ export class RealEstateList extends Entity {
     type: 'string',
     required: true,
   })
-  locationId: string;
+  neighborhood: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  neighborhood: string;
+  images: string[];
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  lat: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  lng: number;
 
   @property({
     type: 'string',
@@ -57,6 +70,11 @@ export class RealEstateList extends Entity {
   })
   updatedAt: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  locationsId: string;
   // Define well-known properties here
 
   // Indexer property to allow additional data

@@ -1,21 +1,13 @@
 import {
-  Count,
-  CountSchema,
   Filter,
   FilterExcludingWhere,
-  repository,
-  Where,
+  repository
 } from '@loopback/repository';
 import {
-  post,
-  param,
   get,
   getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  param,
+  response
 } from '@loopback/rest';
 import {Locations} from '../models';
 import {LocationsRepository} from '../repositories';
@@ -23,40 +15,8 @@ import {LocationsRepository} from '../repositories';
 export class LocationsController {
   constructor(
     @repository(LocationsRepository)
-    public locationsRepository : LocationsRepository,
-  ) {}
-
-  @post('/locations')
-  @response(200, {
-    description: 'Locations model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Locations)}},
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Locations, {
-            title: 'NewLocations',
-            exclude: ['id'],
-          }),
-        },
-      },
-    })
-    locations: Omit<Locations, 'id'>,
-  ): Promise<Locations> {
-    return this.locationsRepository.create(locations);
-  }
-
-  @get('/locations/count')
-  @response(200, {
-    description: 'Locations model count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async count(
-    @param.where(Locations) where?: Where<Locations>,
-  ): Promise<Count> {
-    return this.locationsRepository.count(where);
-  }
+    public locationsRepository: LocationsRepository,
+  ) { }
 
   @get('/locations')
   @response(200, {
@@ -76,25 +36,6 @@ export class LocationsController {
     return this.locationsRepository.find(filter);
   }
 
-  @patch('/locations')
-  @response(200, {
-    description: 'Locations PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Locations, {partial: true}),
-        },
-      },
-    })
-    locations: Locations,
-    @param.where(Locations) where?: Where<Locations>,
-  ): Promise<Count> {
-    return this.locationsRepository.updateAll(locations, where);
-  }
-
   @get('/locations/{id}')
   @response(200, {
     description: 'Locations model instance',
@@ -109,42 +50,5 @@ export class LocationsController {
     @param.filter(Locations, {exclude: 'where'}) filter?: FilterExcludingWhere<Locations>
   ): Promise<Locations> {
     return this.locationsRepository.findById(id, filter);
-  }
-
-  @patch('/locations/{id}')
-  @response(204, {
-    description: 'Locations PATCH success',
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Locations, {partial: true}),
-        },
-      },
-    })
-    locations: Locations,
-  ): Promise<void> {
-    await this.locationsRepository.updateById(id, locations);
-  }
-
-  @put('/locations/{id}')
-  @response(204, {
-    description: 'Locations PUT success',
-  })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() locations: Locations,
-  ): Promise<void> {
-    await this.locationsRepository.replaceById(id, locations);
-  }
-
-  @del('/locations/{id}')
-  @response(204, {
-    description: 'Locations DELETE success',
-  })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.locationsRepository.deleteById(id);
   }
 }
