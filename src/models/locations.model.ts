@@ -1,5 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {RealEstateList} from './real-estate-list.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
 export class Locations extends Entity {
@@ -39,10 +38,6 @@ export class Locations extends Entity {
     required: true,
   })
   updatedAt: string;
-
-  @hasMany(() => RealEstateList)
-  realEstateLists: RealEstateList[];
-  // Define well-known properties here
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

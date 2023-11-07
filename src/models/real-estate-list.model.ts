@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Locations} from './locations.model';
 
 @model({settings: {strict: false}})
 export class RealEstateList extends Entity {
@@ -70,10 +71,7 @@ export class RealEstateList extends Entity {
   })
   updatedAt: string;
 
-  @property({
-    type: 'string',
-    required: true,
-  })
+  @belongsTo(() => Locations)
   locationsId: string;
   // Define well-known properties here
 
